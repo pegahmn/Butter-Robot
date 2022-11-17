@@ -36,11 +36,14 @@ class Agent:
         'D' : (-1, 0)
     }
 
-    def isInTable(self, pos: list, state: np.ndarray) -> bool:
-        if pos[0] < 0 or state.shape[0] <= pos[0]:
+    def __init__(self, env: Environment) -> None:
+        self.env = env
+
+    def isInTable(self, pos: list, table: np.ndarray) -> bool:
+        if pos[0] < 0 or table.shape[0] <= pos[0]:
             return False
 
-        if pos[1] < 0 or state.shape[1] <= pos[1]:
+        if pos[1] < 0 or table.shape[1] <= pos[1]:
             return False
 
         return True
@@ -49,25 +52,25 @@ class Agent:
         up, right = self.MOVES[move]
 
         newPos = [node.posR[0] + up, node.posR[1] + right]
-        state = node.state
+        table = self.env.table
         
-        if not self.isInTable(newPos, state):
+        if not self.isInTable(newPos, table):
             return False
 
-        if  state[newPos[0], newPos[1]] == 'x':
+        if  table[newPos[0], newPos[1]] == 'x':
             return False
 
         if newPos in node.posBs:
-            if newPos in self.env.PosPs:
+            if newPos in self.env.posPs:
                 return False
 
             frontPos = [(newPos[0] if node.posR[0]==newPos[0] else (2 * newPos[0] - node.posR[0])),
                     (newPos[1] if node.posR[1]==newPos[1] else (2 * newPos[1] - node.posR[1]))]
 
-            if not self.isInTable(frontPos, state):
+            if not self.isInTable(frontPos, table):
                 return False
 
-            if  state[newPos[0], newPos[1]] == 'x':
+            if  table[newPos[0], newPos[1]] == 'x':
                 return False
             
             if frontPos in node.posBs:
@@ -79,7 +82,7 @@ class Agent:
         up, right = self.MOVES[move]
 
         newPos = [node.posR[0] + up, node.posR[1] + right]
-        g = int(node.state[newPos[0], newPos[1]]) + node.g
+        g = int(self.env.table[newPos[0], newPos[1]]) + node.g
         
         if newPos in node.posBs:
             PosBs = node.posBs.copy()
@@ -89,7 +92,7 @@ class Agent:
         else:
             PosBs = node.posBs
 
-        return Node(node.state, newPos, node.PosPs, PosBs, move, node.depth+1, g)
+        return Node(self.env.table, newPos, self.env.posPs, PosBs, move, node.depth+1, g)
 
     def successor(self, node: Node) -> list[Node]:
         Childs = []
