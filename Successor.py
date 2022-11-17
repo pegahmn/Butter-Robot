@@ -6,15 +6,17 @@ class Node:
     PosPs: list[list[int]]
     PosBs: list[list[int]]
     move: str
+    depth: int
     g: int
     h: float
 
-    def __init__(self, state, posR, posPs, posBs, move, g, h= None) -> None:
+    def __init__(self, state, posR, posPs, posBs, move, depth, g, h= None) -> None:
         self.state = state
         self.PosR = posR
         self.PosPs = posPs
         self.PosBs = posBs
         self.move = move
+        self.depth = depth
         self.g = g
         self.h = h
 
@@ -27,7 +29,15 @@ def isInTable(pos: list, state: np.ndarray) -> bool:
 
     return True
 
-def isValidPos(node: Node, newPos: list) -> bool:
+def isValidMove(node: Node, move: str) -> bool:
+    up, right = {
+        'R' : (0, 1),
+        'U' : (1, 0),
+        'L' : (0, -1),
+        'D' : (-1, 0)
+    }[move]
+    
+    newPos = [node.PosR[0] + up, node.PosR[1] + right]
     state = node.state
     
     if not isInTable(newPos, state):
@@ -54,78 +64,35 @@ def isValidPos(node: Node, newPos: list) -> bool:
         
     return True
 
-def getLeftState(state: np.ndarray, pos: list) -> Node:
-    newPos = [pos[0], pos[1] - 1]
-    newPosVal = state[newPos[0], newPos[1]]
-    cost = int(newPosVal[0])
+def getChilde(node: Node, move: str) -> Node:
+    up, right = {
+        'R' : (0, 1),
+        'U' : (1, 0),
+        'L' : (0, -1),
+        'D' : (-1, 0)
+    }[move]
 
-    if len(newPosVal) == 1 or newPosVal[1] == 'p':
-        newState = state
-    else:
-        newState = state.copy()
-        newState[newPos[0], newPos[1]] = newPosVal[0]
-        newState[pos[0], pos[1] - 2] += "b"
+    newPos = [node.PosR[0] + up, node.PosR[1] + right]
+    g = int(node.state[newPos[0], newPos[1]]) + node.g
     
-    return Node(newState, newPos, cost)
-
-def getRightState(state: np.ndarray, pos: list) -> Node:
-    newPos = [pos[0], pos[1] + 1]
-    newPosVal = state[newPos[0], newPos[1]]
-    cost = int(newPosVal[0])
-
-    if len(newPosVal) == 1 or newPosVal[1] == 'p':
-        newState = state
+    if newPos in node.PosBs:
+        PosBs = node.PosBs.copy()
+        Index = PosBs.index(newPos)
+        PosBs[Index][0] += up
+        PosBs[Index][1] += right
     else:
-        newState = state.copy()
-        newState[newPos[0], newPos[1]] = newPosVal[0]
-        newState[pos[0], pos[1] + 2] += "b"
-    
-    return Node(newState, newPos, cost)
+        PosBs = node.PosBs
 
-def getUpState(state: np.ndarray, pos: list) -> Node:
-    newPos = [pos[0] - 1, pos[1]]
-    newPosVal = state[newPos[0], newPos[1]]
-    cost = int(newPosVal[0])
-
-    if len(newPosVal) == 1 or newPosVal[1] == 'p':
-        newState = state
-    else:
-        newState = state.copy()
-        newState[newPos[0], newPos[1]] = newPosVal[0]
-        newState[pos[0] - 2, pos[1]] += "b"
-    
-    return Node(newState, newPos, cost)
-
-def getDownState(state: np.ndarray, pos: list) -> Node:
-    newPos = [pos[0] + 1, pos[1]]
-    newPosVal = state[newPos[0], newPos[1]]
-    cost = int(newPosVal[0])
-
-    if len(newPosVal) == 1 or newPosVal[1] == 'p':
-        newState = state
-    else:
-        newState = state.copy()
-        newState[newPos[0], newPos[1]] = newPosVal[0]
-        newState[pos[0] + 2, pos[1]] += "b"
-    
-    return Node(newState, newPos, cost)
+    return Node(node.state, newPos, node.PosPs, PosBs, move, node.depth+1, g)
 
 def successor(node: Node) -> list[Node]:
     Childs = []
 
-    state = node.state
-    pos = node.RPos
+    pos = node.PosR
 
-    if isValidPos(pos, [pos[0], pos[1]+1], state):
-        Childs.append(getRightState(state, pos))
-
-    if isValidPos(pos, [pos[0]-1, pos[1]], state):
-        Childs.append(getUpState(state, pos))
-
-    if isValidPos(pos, [pos[0], pos[1]-1], state):
-        Childs.append(getLeftState(state, pos))
-
-    if isValidPos(pos, [pos[0]+1, pos[1]], state):
-        Childs.append(getDownState(state, pos))
+    MOVES = ['R', 'U', 'L', 'D']
+    for move in MOVES:
+        if isValidMove(node, move):
+            Childs.append(getChilde(node, move))
     
     return Childs
