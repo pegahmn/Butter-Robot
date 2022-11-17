@@ -18,14 +18,6 @@ def GetBPRPosition(State: np.ndarray): #Get Position of Robot and Butter and Poi
     return ButterPosition, RobotPosition, PointPosition
                 
                 
-            
-
-
-
-
-
-
-
 # state = np.asarray([
 #     ["1", "2", "3"],
 #     ["2b", "4p", "5r"]
@@ -33,4 +25,6 @@ def GetBPRPosition(State: np.ndarray): #Get Position of Robot and Butter and Poi
 # A=GetButterPosition(state)
 # print(A)
 # print(state)
-# ([[1, 0]], [], [])
+# # ([[1, 0]], [[1, 2]], [[1, 1]])
+# [['1' '2' '3']
+#  ['2' '4' '5']]
