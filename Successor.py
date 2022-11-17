@@ -36,7 +36,7 @@ def isValidMove(node: Node, move: str) -> bool:
         'L' : (0, -1),
         'D' : (-1, 0)
     }[move]
-    
+
     newPos = [node.PosR[0] + up, node.PosR[1] + right]
     state = node.state
     
@@ -64,6 +64,9 @@ def isValidMove(node: Node, move: str) -> bool:
         
     return True
 
+def cycleCheck(node: Node) -> bool:
+    pass
+
 def getChilde(node: Node, move: str) -> Node:
     up, right = {
         'R' : (0, 1),
@@ -85,10 +88,8 @@ def getChilde(node: Node, move: str) -> Node:
 
     return Node(node.state, newPos, node.PosPs, PosBs, move, node.depth+1, g)
 
-def successor(node: Node) -> list[Node]:
+def successor(node: Node, Seen: list[Node]) -> list[Node]:
     Childs = []
-
-    pos = node.PosR
 
     MOVES = ['R', 'U', 'L', 'D']
     for move in MOVES:
