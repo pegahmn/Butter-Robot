@@ -18,50 +18,41 @@ class Node:
         self.g = g
         self.h = h
 
-def isValidPos(curPos: list, newPos: list, state: np.ndarray) -> bool:
-    if newPos[0] < 0 or state.shape[0] <= newPos[0]:
+def isInTable(pos: list, state: np.ndarray) -> bool:
+    if pos[0] < 0 or state.shape[0] <= pos[0]:
         return False
 
-    if newPos[1] < 0 or state.shape[1] <= newPos[1]:
+    if pos[1] < 0 or state.shape[1] <= pos[1]:
         return False
 
-    newPosVal = state[newPos[0], newPos[1]]
+    return True
 
-    if len(newPosVal) == 3:
-        return False
-
-    if  newPosVal == 'x':
-        return False
-
-    if len(newPosVal) == 1:
-        return True
-
-    if newPosVal[1] == 'p':
-        return True
-
-    frotPos = [(newPos[0] if curPos[0]==newPos[0] else (2 * newPos[0] - curPos[0])),
-                (newPos[1] if curPos[1]==newPos[1] else (2 * newPos[1] - curPos[1]))
-                ]
-    if frotPos[0] < 0 or state.shape[0] <= frotPos[0]:
-        return False
-
-    if frotPos[1] < 0 or state.shape[1] <= frotPos[1]:
-        return False
-
-    frotPosVal = state[frotPos[0], frotPos[1]]
-    if len(frotPosVal) == 3:
-        return False
+def isValidPos(node: Node, newPos: list) -> bool:
+    state = node.state
     
-    if  frotPosVal == 'x':
+    if not isInTable(newPos, state):
         return False
 
-    if len(frotPosVal) == 1:
-        return True
+    if  state[newPos[0], newPos[1]] == 'x':
+        return False
 
-    if frotPosVal[1] == 'p':
-        return True
-    
-    return False
+    if newPos in node.PosBs:
+        if newPos in node.PosPs:
+            return False
+
+        frontPos = [(newPos[0] if node.PosR[0]==newPos[0] else (2 * newPos[0] - node.PosR[0])),
+                (newPos[1] if node.PosR[1]==newPos[1] else (2 * newPos[1] - node.PosR[1]))]
+
+        if not isInTable(frontPos, state):
+            return False
+
+        if  state[newPos[0], newPos[1]] == 'x':
+            return False
+        
+        if frontPos in node.PosBs:
+            return False
+        
+    return True
 
 def getLeftState(state: np.ndarray, pos: list) -> Node:
     newPos = [pos[0], pos[1] - 1]
