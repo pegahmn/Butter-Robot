@@ -29,6 +29,12 @@ class Environment:
 class Agent:
     env: Environment
     seen = []
+    MOVES = {
+        'R' : (0, 1),
+        'U' : (1, 0),
+        'L' : (0, -1),
+        'D' : (-1, 0)
+    }
 
     def isInTable(self, pos: list, state: np.ndarray) -> bool:
         if pos[0] < 0 or state.shape[0] <= pos[0]:
@@ -40,12 +46,7 @@ class Agent:
         return True
 
     def isValidMove(self, node: Node, move: str) -> bool:
-        up, right = {
-            'R' : (0, 1),
-            'U' : (1, 0),
-            'L' : (0, -1),
-            'D' : (-1, 0)
-        }[move]
+        up, right = self.MOVES[move]
 
         newPos = [node.posR[0] + up, node.posR[1] + right]
         state = node.state
@@ -75,12 +76,7 @@ class Agent:
         return True
 
     def getChilde(self, node: Node, move: str) -> Node:
-        up, right = {
-            'R' : (0, 1),
-            'U' : (1, 0),
-            'L' : (0, -1),
-            'D' : (-1, 0)
-        }[move]
+        up, right = self.MOVES[move]
 
         newPos = [node.posR[0] + up, node.posR[1] + right]
         g = int(node.state[newPos[0], newPos[1]]) + node.g
@@ -98,8 +94,7 @@ class Agent:
     def successor(self, node: Node) -> list[Node]:
         Childs = []
 
-        MOVES = ['R', 'U', 'L', 'D']
-        for move in MOVES:
+        for move in self.MOVES.keys():
             if self.isValidMove(node, move) and node in self.seen:
                 Childs.append(self.getChilde(node, move))
         
