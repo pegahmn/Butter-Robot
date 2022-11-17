@@ -2,13 +2,21 @@ import numpy as np
 
 class Node:
     state: np.ndarray(0)
-    robotPos: list[int]
-    cost: int
+    PosR: list[int]
+    PosPs: list[list[int]]
+    PosBs: list[list[int]]
+    move: str
+    g: int
+    h: float
 
-    def __init__(self, state, pos, cost) -> None:
+    def __init__(self, state, posR, posPs, posBs, move, g, h= None) -> None:
         self.state = state
-        self.robotPos = pos
-        self.cost = cost
+        self.PosR = posR
+        self.PosPs = posPs
+        self.PosBs = posBs
+        self.move = move
+        self.g = g
+        self.h = h
 
 def isValidPos(curPos: list, newPos: list, state: np.ndarray) -> bool:
     if newPos[0] < 0 or state.shape[0] <= newPos[0]:
@@ -115,7 +123,7 @@ def successor(node: Node) -> list[Node]:
     Childs = []
 
     state = node.state
-    pos = node.robotPos
+    pos = node.RPos
 
     if isValidPos(pos, [pos[0], pos[1]+1], state):
         Childs.append(getRightState(state, pos))

@@ -18,6 +18,6 @@ for child in childs:
         for ch in row:
             print(ch, end= "\t")
         print()
-    print(f"robot pos = {child.robotPos}")
+    print(f"robot pos = {child.RPos}")
     print(f"cost = {child.cost}")
     print("--------------------")
