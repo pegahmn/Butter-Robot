@@ -6,7 +6,7 @@ class Node:
     g: int
     h: float
 
-    def __init__(self, posR, posBs, move, depth, g, h= None) -> None:
+    def __init__(self, posR, posBs, move= '', depth= 0, g= 0, h= None) -> None:
         self.posR = posR
         self.posBs = posBs
         self.move = move
