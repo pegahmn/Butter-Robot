@@ -15,11 +15,11 @@ class Agent:
     def __init__(self, env: Environment) -> None:
         self.env = env
 
-    def isInTable(self, pos: list, table: np.ndarray) -> bool:
-        if pos[0] < 0 or table.shape[0] <= pos[0]:
+    def isInTable(self, pos: list) -> bool:
+        if pos[0] < 0 or self.env.table.shape[0] <= pos[0]:
             return False
 
-        if pos[1] < 0 or table.shape[1] <= pos[1]:
+        if pos[1] < 0 or self.env.table.shape[1] <= pos[1]:
             return False
 
         return True
@@ -30,7 +30,7 @@ class Agent:
         newPos = [node.posR[0] + up, node.posR[1] + right]
         table = self.env.table
         
-        if not self.isInTable(newPos, table):
+        if not self.isInTable(newPos):
             return False
 
         if  table[newPos[0], newPos[1]] == 'x':
@@ -40,10 +40,9 @@ class Agent:
             if newPos in self.env.posPs:
                 return False
 
-            frontPos = [(newPos[0] if node.posR[0]==newPos[0] else (2 * newPos[0] - node.posR[0])),
-                    (newPos[1] if node.posR[1]==newPos[1] else (2 * newPos[1] - node.posR[1]))]
+            frontPos = [newPos[0] + up, newPos[1] + right]
 
-            if not self.isInTable(frontPos, table):
+            if not self.isInTable(frontPos):
                 return False
 
             if  table[newPos[0], newPos[1]] == 'x':
@@ -62,11 +61,11 @@ class Agent:
         
         if newPos in node.posBs:
             PosBs = []
-            for pos in node.posBs:
-                PosBs.append(pos.copy())
-            Index = PosBs.index(newPos)
-            PosBs[Index][0] += up
-            PosBs[Index][1] += right
+            for i in range(len(node.posBs)):
+                PosBs.append(node.posBs[i].copy())
+                if PosBs[i] == newPos:
+                    PosBs[i][0] += up
+                    PosBs[i][1] += right
         else:
             PosBs = node.posBs
 
@@ -76,8 +75,10 @@ class Agent:
         Childs = []
 
         for move in Agent.MOVES.keys():
-            if self.isValidMove(node, move) and node not in self.seen:
-                Childs.append(self.getChilde(node, move))
+            if self.isValidMove(node, move):
+                childe = self.getChilde(node, move)
+                if childe not in self.seen:
+                    Childs.append(childe)
         
         self.seen.append(node)
         return Childs
