@@ -13,3 +13,6 @@ class Node:
         self.depth = depth
         self.g = g
         self.h = h
+
+    def __eq__(self, __o: object) -> bool:
+        return type(__o) == Node and set(self.posBs) == set(__o.posBs) and self.posR == __o.posR
