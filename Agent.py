@@ -30,7 +30,7 @@ class Agent:
         newPos = [node.posR[0] + up, node.posR[1] + right]
         table = self.env.table
         
-        if not self.isInTable(newPos, table):
+        if not self.isInTable(newPos):
             return False
 
         if  table[newPos[0], newPos[1]] == 'x':
@@ -42,7 +42,7 @@ class Agent:
 
             frontPos = [newPos[0] + up, newPos[1] + right]
 
-            if not self.isInTable(frontPos, table):
+            if not self.isInTable(frontPos):
                 return False
 
             if  table[newPos[0], newPos[1]] == 'x':
