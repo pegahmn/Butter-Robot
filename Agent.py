@@ -62,7 +62,7 @@ class Agent:
         if newPos in node.posBs:
             PosBs = []
             for i in range(len(node.posBs)):
-                PosBs.append(node.posBs.copy())
+                PosBs.append(node.posBs[i].copy())
                 if PosBs[i] == newPos:
                     PosBs[i][0] += up
                     PosBs[i][1] += right
