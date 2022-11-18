@@ -15,11 +15,11 @@ class Agent:
     def __init__(self, env: Environment) -> None:
         self.env = env
 
-    def isInTable(self, pos: list, table: np.ndarray) -> bool:
-        if pos[0] < 0 or table.shape[0] <= pos[0]:
+    def isInTable(self, pos: list) -> bool:
+        if pos[0] < 0 or self.env.table.shape[0] <= pos[0]:
             return False
 
-        if pos[1] < 0 or table.shape[1] <= pos[1]:
+        if pos[1] < 0 or self.env.table.shape[1] <= pos[1]:
             return False
 
         return True
