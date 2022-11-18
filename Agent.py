@@ -61,11 +61,11 @@ class Agent:
         
         if newPos in node.posBs:
             PosBs = []
-            for pos in node.posBs:
-                PosBs.append(pos.copy())
-            Index = PosBs.index(newPos)
-            PosBs[Index][0] += up
-            PosBs[Index][1] += right
+            for i in range(len(node.posBs)):
+                PosBs.append(node.posBs.copy())
+                if PosBs[i] == newPos:
+                    PosBs[i][0] += up
+                    PosBs[i][1] += right
         else:
             PosBs = node.posBs
 
