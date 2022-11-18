@@ -75,8 +75,10 @@ class Agent:
         Childs = []
 
         for move in Agent.MOVES.keys():
-            if self.isValidMove(node, move) and node not in self.seen:
-                Childs.append(self.getChilde(node, move))
+            if self.isValidMove(node, move):
+                childe = self.getChilde(node, move)
+                if childe not in self.seen:
+                    Childs.append(childe)
         
         self.seen.append(node)
         return Childs
