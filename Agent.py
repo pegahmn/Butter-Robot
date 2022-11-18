@@ -40,8 +40,7 @@ class Agent:
             if newPos in self.env.posPs:
                 return False
 
-            frontPos = [(newPos[0] if node.posR[0]==newPos[0] else (2 * newPos[0] - node.posR[0])),
-                    (newPos[1] if node.posR[1]==newPos[1] else (2 * newPos[1] - node.posR[1]))]
+            frontPos = [newPos[0] + up, newPos[1] + right]
 
             if not self.isInTable(frontPos, table):
                 return False
