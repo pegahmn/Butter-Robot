@@ -25,7 +25,7 @@ class Agent:
         return True
 
     def isValidMove(self, node: Node, move: str) -> bool:
-        up, right = self.MOVES[move]
+        up, right = Agent.MOVES[move]
 
         newPos = [node.posR[0] + up, node.posR[1] + right]
         table = self.env.table
@@ -55,7 +55,7 @@ class Agent:
         return True
 
     def getChilde(self, node: Node, move: str) -> Node:
-        up, right = self.MOVES[move]
+        up, right = Agent.MOVES[move]
 
         newPos = [node.posR[0] + up, node.posR[1] + right]
         g = int(self.env.table[newPos[0], newPos[1]]) + node.g
@@ -73,7 +73,7 @@ class Agent:
     def successor(self, node: Node) -> list[Node]:
         Childs = []
 
-        for move in self.MOVES.keys():
+        for move in Agent.MOVES.keys():
             if self.isValidMove(node, move) and node in self.seen:
                 Childs.append(self.getChilde(node, move))
         
