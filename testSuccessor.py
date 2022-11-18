@@ -6,8 +6,8 @@ from Agent import Agent
 state = np.asarray(
     [['x', 'x', 'x', 'x', 'x'],
     ['x', '1p', '2b', '1p', 'x'],
-    ['1', '1r', '2b', '1', '1'],
-    ['1', '1', '2', '1', '1']], dtype= np.str_
+    ['1', '1', '2b', '1', '1'],
+    ['1', '1', '2r', '1', '1']], dtype= np.str_
 )
 
 table = np.asarray(
@@ -21,12 +21,14 @@ table = np.asarray(
 
 posPs = [[1, 1], [1, 3]]
 posBs = [[1, 2], [2, 2]]
-posR = [2, 1]
+posR = [3, 2]
 
 env = Environment(table, posPs)
 agent = Agent(env)
 root = Node(posR, posBs)
 childs = agent.successor(root)
+
+print(childs)
 
 for child in childs:
     print(f"move = {child.move}")
@@ -36,8 +38,8 @@ for child in childs:
         print(end= "\t")
         for j in range(table.shape[1]):
             cell = table[i, j]
-            cell += 'p' if [i, j] in child.posBs else ''
-            cell += 'b' if [i, j] in posPs else ''
+            cell += 'p' if [i, j] in posPs else ''
+            cell += 'b' if [i, j] in child.posBs else ''
             cell += 'r' if [i, j] == child.posR else ''
             print(cell, end= "\t")
         print()

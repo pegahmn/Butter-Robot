@@ -7,9 +7,9 @@ class Agent:
     seen = []
     MOVES = {
         'R' : (0, 1),
-        'U' : (1, 0),
+        'U' : (-1, 0),
         'L' : (0, -1),
-        'D' : (-1, 0)
+        'D' : (1, 0)
     }
 
     def __init__(self, env: Environment) -> None:
@@ -61,20 +61,22 @@ class Agent:
         g = int(self.env.table[newPos[0], newPos[1]]) + node.g
         
         if newPos in node.posBs:
-            PosBs = node.posBs.copy()
+            PosBs = []
+            for pos in node.posBs:
+                PosBs.append(pos.copy())
             Index = PosBs.index(newPos)
             PosBs[Index][0] += up
             PosBs[Index][1] += right
         else:
             PosBs = node.posBs
 
-        return Node(self.env.table, newPos, self.env.posPs, PosBs, move, node.depth+1, g)
+        return Node(newPos, PosBs, move, node.depth+1, g)
 
     def successor(self, node: Node) -> list[Node]:
         Childs = []
 
         for move in Agent.MOVES.keys():
-            if self.isValidMove(node, move) and node in self.seen:
+            if self.isValidMove(node, move) and node not in self.seen:
                 Childs.append(self.getChilde(node, move))
         
         self.seen.append(node)
