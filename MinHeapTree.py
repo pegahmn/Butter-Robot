@@ -22,7 +22,7 @@ class MHT:
         return self.getRightchild(indx) < self.size
 
     def hasLeftchild(self, indx):
-        return self.hasLeftchild(indx) < self.size
+        return self.getLeftchild(indx) < self.size
 
     def parent(self, indx):
         return self.A[self.getParentIndx(indx)]
