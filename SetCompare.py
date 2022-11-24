@@ -1,6 +1,6 @@
 import numpy as np
 
-def GoalTest(ButterPosition:list,PointPosition:list):
+def Compare(ButterPosition:list,PointPosition:list):
     for Butter in ButterPosition:
         if Butter not in PointPosition:
             return False
@@ -10,8 +10,8 @@ def GoalTest(ButterPosition:list,PointPosition:list):
             
     return True
 #------------------------------------------------
-Test=GoalTest([[1,0], [2,3]],[[2,3], [1,0]])
-print(Test)
+# Test=Compare([[1,0], [2,3]],[[2,3], [1,0]])
+# print(Test)
 
 # [[1,0], [2,3]]
 # [[2,3], [1,0]]

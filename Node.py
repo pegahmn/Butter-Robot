@@ -1,3 +1,4 @@
+from SetCompare import Compare
 class Node:
     posR: list[int]
     posBs: list[list[int]]
@@ -15,4 +16,4 @@ class Node:
         self.h = h
 
     def __eq__(self, __o: object) -> bool:
-        return type(__o) == Node and set(self.posBs) == set(__o.posBs) and self.posR == __o.posR
+        return type(__o) == Node and Compare(self.posBs,__o.posBs) and self.posR == __o.posR

@@ -9,7 +9,8 @@ class Stack:
     def pop(self):
         if self.is_empty():
             raise IndexError('Stack is empty')
-        else: return self.nodes[-1]
+        else:
+            return self.nodes.pop()
 
     def is_empty(self):
         return len(self.nodes)==0
