@@ -1,5 +1,4 @@
 
-
 class MHT:
     def __init__(self, capacity):
         self.A = []*capacity
@@ -77,3 +76,4 @@ class MHT:
 
     def print(self):
         print(self.A)
+#OLD MinHeap
