@@ -10,7 +10,7 @@ from stack01 import Stack
 state = np.asarray(
     [['x', 'x', 'x', 'x', 'x'],
     ['x', '1', '2b', '1p', 'x'],
-    ['1', '1p', '2b', '1', '1'],
+    ['1', '1p', '2b', '1r', '1'],
     ['1', '1', '2', '1', '1']], dtype= np.str_
 )
 
