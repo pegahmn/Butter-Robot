@@ -7,7 +7,7 @@ class Node:
     g: int
     h: float
 
-    def __init__(self, posR, posBs, parent=None, move= '', depth= 0, g= 0, h= None) -> None:
+    def __init__(self, posR, posBs, parent=None, move= '', depth= 0, g= 0, h= 0) -> None:
         self.parent = parent
         self.posR = posR
         self.posBs = posBs
@@ -18,3 +18,9 @@ class Node:
 
     def __eq__(self, __o: object) -> bool:
         return type(__o) == Node and Compare(self.posBs,__o.posBs) and self.posR == __o.posR
+
+    def __gt__(self, __o):
+        return (self.g + self.h) > (__o.g + __o.h)
+
+    def __lt__(self, __o):
+        return __o.__gt__(self)

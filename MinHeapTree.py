@@ -52,17 +52,23 @@ class MHT:
         if self.is_empty():
             raise Exception('Empty heap')
         node = self.A[0]
-        self.A[0] = self.A.pop()
-        self.size -= 1
-        self.heapifydown(0)
+        
+        if self.size != 1:
+            self.A[0] = self.A.pop()
+            self.size -= 1
+            self.heapifydown(0)
+        else:
+            self.A.pop()
+            self.size -= 1
+        
         return node
 
     def heapifydown(self, index):
         smallest = index
-        if(self.hasLeftchild(index) and self.A[smallest] > self.leftchild[index]):
+        if(self.hasLeftchild(index) and self.A[smallest] > self.leftchild(index)):
             smallest = self.getLeftchild(index)
 
-        if(self.hasRightchild(index) and self.A[smallest] > self.rightchild[index]):
+        if(self.hasRightchild(index) and self.A[smallest] > self.rightchild(index)):
             smallest = self.getRightchild(index)
 
         if(smallest != index):
