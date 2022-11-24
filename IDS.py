@@ -7,10 +7,11 @@ from GetBPR import GetBPRPosition
 from stack01 import Stack
 
 state = np.asarray(
-    [['x', 'x', 'x', 'x', 'x'],
+    [['x', 'x', '1', 'x', '2'],
     ['x', '1', '2b', '1p', 'x'],
     ['1', '1p', '2b', '1r', '1'],
-    ['1', '1', '2', '1', '1']], dtype= np.str_
+    ['1', '1', '2', '1', '1'],
+    ['1', '2', '2', '2', '1']], dtype= np.str_
 )
 
 
@@ -26,20 +27,21 @@ def IDS(Root: Node,Agent: Agent,PointPosition:list):
     while True:
         print(limit)
         stack.push(Root)
+        Agent.resetSeen()
         max_depth=0
         while True:
             if stack.is_empty():
                 break
-            state=stack.pop()
-            state:Node
-            if Compare(state.posBs,PointPosition):
-                return state
-            if state.depth<limit:
-                childs=Agent.successor(state)
+            node=stack.pop()
+            node:Node
+            if Compare(node.posBs,PointPosition):
+                return node
+            if node.depth<limit:
+                childs=Agent.successor(node)
                 for child in childs:
                     stack.push(child)
-            if state.depth>max_depth:
-                max_depth=state.depth
+            if node.depth>max_depth:
+                max_depth=node.depth
             
         print(max_depth,"M")
         if limit>max_depth:

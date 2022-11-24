@@ -18,3 +18,10 @@ class Node:
 
     def __eq__(self, __o: object) -> bool:
         return type(__o) == Node and Compare(self.posBs,__o.posBs) and self.posR == __o.posR
+
+    def __hash__(self) -> int:
+        h = hash((self.depth, self.g, self.h, self.move))
+        h = hash((h, self.posR[0], self.posR[1]))
+        for pos in self.posBs:
+            h = hash((h, pos[0], pos[1]))
+        return h
