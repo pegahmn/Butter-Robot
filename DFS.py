@@ -10,7 +10,7 @@ from stack01 import Stack
 state = np.asarray(
     [['x', 'x', 'x', 'x', 'x'],
     ['x', '1', '2b', '1p', 'x'],
-    ['1', '1p', '2b', '1r', '1'],
+    ['1', '1p', '2b', '1', '1'],
     ['1', '1', '2', '1', '1']], dtype= np.str_
 )
 
@@ -19,6 +19,7 @@ ButterPosition, RobotPosition, PointPosition=GetBPRPosition(state)
 env = Environment(state, PointPosition)
 agent = Agent(env)
 root = Node(RobotPosition[0], ButterPosition)
+
 def DFS(Root: Node,Agent: Agent,PointPosition:list):
     stack=Stack()
     stack.push(Root)
@@ -26,17 +27,26 @@ def DFS(Root: Node,Agent: Agent,PointPosition:list):
         if stack.is_empty():
             return None
         state=stack.pop()
-        state : Node
         if Compare(state.posBs,PointPosition):
             return state
         childs=Agent.successor(state)
         for child in childs:
             stack.push(child)
+
 Answer=DFS(root,agent,PointPosition)
 if Answer==None:
     print("There is no answer")
 else:
-    print(f"move = {Answer.move}")
+    node = Answer
+    Moves = []
+    while node != None:
+        Moves.append(node.move)
+        node = node.parent
+
+    print("Moves: ")
+    for i in range(len(Moves)-1,-1,-1):
+        print(f"{Moves[i]} ", end='')
+
     print(f"depth = {Answer.depth}")
     print(f"cost = {Answer.g}")
     for i in range(state.shape[0]):

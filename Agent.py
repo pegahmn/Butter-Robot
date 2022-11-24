@@ -69,7 +69,7 @@ class Agent:
         else:
             PosBs = node.posBs
 
-        return Node(newPos, PosBs, move, node.depth+1, g)
+        return Node(newPos, PosBs, node, move, node.depth+1, g)
 
     def successor(self, node: Node) -> list[Node]:
         Childs = []
