@@ -4,7 +4,7 @@ from Environment import Environment
 
 class Agent:
     env: Environment
-    seen = []
+    seen = [] #We should talk about it
     MOVES = {
         'R' : (0, 1),
         'U' : (-1, 0),
