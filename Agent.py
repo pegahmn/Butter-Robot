@@ -4,7 +4,7 @@ from Environment import Environment
 
 class Agent:
     env: Environment
-    seen = set()
+    seen = []
     MOVES = {
         'R' : (0, 1),
         'U' : (-1, 0),
@@ -83,5 +83,5 @@ class Agent:
                 if childe not in self.seen:
                     Childs.append(childe)
         
-        self.seen.add(node)
+        self.seen.append(node)
         return Childs

@@ -32,6 +32,7 @@ def DFS(Root: Node,Agent: Agent,PointPosition:list):
         childs=Agent.successor(state)
         for child in childs:
             stack.push(child)
+        
 
 Answer=DFS(root,agent,PointPosition)
 if Answer==None:
