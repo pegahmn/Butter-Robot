@@ -19,7 +19,7 @@ env = Environment(state, PointPosition)
 agent = Agent(env)
 root = Node(RobotPosition[0], ButterPosition)
 
-def DFS(Root: Node,Agent: Agent,PointPosition:list):
+def UCS(Root: Node,Agent: Agent,PointPosition:list):
     mht=MHT()
     mht.push(Root)
     while True:
@@ -32,7 +32,7 @@ def DFS(Root: Node,Agent: Agent,PointPosition:list):
         for child in childs:
             mht.push(child)
 
-Answer=DFS(root,agent,PointPosition)
+Answer=UCS(root,agent,PointPosition)
 if Answer==None:
     print("There is no answer")
 else:
