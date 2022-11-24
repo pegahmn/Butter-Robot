@@ -1,7 +1,5 @@
 import numpy as np
 
-import numpy as np
-
 def Compare(ButterPosition:list,PointPosition:list):
     for Butter in ButterPosition:
         if Butter not in PointPosition:
