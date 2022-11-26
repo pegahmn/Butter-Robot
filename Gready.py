@@ -17,6 +17,8 @@ def Gready(Root: Node,Agent: Agent,PointPosition:list):
         if Compare(state.posBs,PointPosition):
             return state
         childs=Agent.successor(state)
+        for child in childs:
+            child.h=Agent.H(child)
         while childs != []:
             maxH = childs[0].h
             index = 0
