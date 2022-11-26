@@ -102,8 +102,6 @@ class Agent:
         
         return H
 
-
-
     def successor(self, node: Node) -> list[Node]:
         Childs = []
 

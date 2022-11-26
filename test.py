@@ -9,22 +9,23 @@ from UCS import UCS
 from A_star import A_star
 from Gready import Gready
 
-Algorithms = [UCS, BFS, DFS, A_star, Gready]
+state = np.asarray(
+    [['x', 'x', 'x', 'x', 'x'],
+    ['x', '1', '2b', '1p', 'x'],
+    ['1', '1p', '2b', '1r', '1'],
+    ['1', '1', '2', '1', '1']], dtype= np.str_
+)
+
+Algorithms = [DFS, BFS, UCS, A_star, Gready]
+
+ButterPosition, RobotPosition, PointPosition=GetBPRPosition(state)
+env = Environment(state, PointPosition)
+agent = Agent(env)
+root = Node(RobotPosition[0], ButterPosition)
 
 for algoritm in Algorithms:
-    state = np.asarray(
-        [['x', 'x', 'x', 'x', 'x'],
-        ['x', '1', '2b', '1p', 'x'],
-        ['1', '1p', '2b', '1r', '1'],
-        ['1', '1', '2', '1', '1']], dtype= np.str_
-    )
-
-    ButterPosition, RobotPosition, PointPosition=GetBPRPosition(state)
-    env = Environment(state, PointPosition)
-    agent = Agent(env)
-    root = Node(RobotPosition[0], ButterPosition)
-
-    Answer=algoritm(root, agent,PointPosition)
+    agent.seen = []
+    Answer=algoritm(root, agent, PointPosition)
     print("--------------" + algoritm.__name__ + "--------------")
 
     if Answer==None:
