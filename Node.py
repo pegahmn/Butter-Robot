@@ -5,7 +5,7 @@ class Node:
     move: str
     depth: int
     g: int
-    h: float
+    h: int
 
     def __init__(self, posR, posBs, parent=None, move= '', depth= 0, g= 0, h= 0) -> None:
         self.parent = parent

@@ -71,6 +71,39 @@ class Agent:
 
         return Node(newPos, PosBs, node, move, node.depth+1, g)
 
+    def d(self, pos1: list[int], pos2: list[int]):
+        return abs(pos1[0] - pos2[0]) + abs(pos1[1] - pos2[1])
+
+    def h(self, pos: list[int], posList: list[list[int]]):
+        minIndex = 0
+        minDistance = self.d(pos, posList[0])
+        for i in range(1, len(posList)):
+            distance = self.d(pos, posList[i])
+            if distance < minDistance:
+                minIndex = i
+                minDistance = distance
+
+        return minDistance, minIndex
+
+    def H(self, node: Node) -> int:
+        PosBs = node.posBs.copy()
+        PosPs = self.env.posPs.copy()
+        PosR = node.posR
+
+        H = 0
+        while PosBs != []:
+            nearestB, indexB = self.h(PosR, PosBs)
+            PosR = PosBs.pop(indexB)
+
+            nearestP, indexP = self.h(PosR, PosPs)
+            PosR = PosPs.pop(indexP)
+            
+            H += nearestB + nearestP
+        
+        return H
+
+
+
     def successor(self, node: Node) -> list[Node]:
         Childs = []
 
