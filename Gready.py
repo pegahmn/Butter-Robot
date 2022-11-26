@@ -9,8 +9,8 @@ from stack01 import Stack
 
 state = np.asarray(
     [['x', 'x', 'x', 'x', 'x'],
-    ['x', '1', '2b', '1p', 'x'],
-    ['1', '1p', '2b', '1r', '1'],
+    ['x', '1r', '2b', '1p', 'x'],
+    ['1', '1p', '2b', '1', '1'],
     ['1', '1', '2', '1', '1']], dtype= np.str_
 )
 
@@ -30,6 +30,8 @@ def Gready(Root: Node,Agent: Agent,PointPosition:list):
         if Compare(state.posBs,PointPosition):
             return state
         childs=Agent.successor(state)
+        for child in childs:
+            child.h=Agent.H(child)
         while childs != []:
             maxH = childs[0].h
             index = 0
@@ -72,11 +74,7 @@ else:
         
 
     
-    # ExpanedNode=Agent.successor(Root)
-    # for i in ExpanedNode:
-    #     if GoalTest(i.posBs,PointPosition):
-
-        
-
-    
+# ExpanedNode=Agent.successor(Root)
+# for i in ExpanedNode:
+#if GoalTest(i.posBs,PointPosition):
     
