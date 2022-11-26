@@ -6,7 +6,7 @@ from SetCompare import Compare
 from GetBPR import GetBPRPosition
 from MinHeapTree import MHT
 
-def UCS(Root: Node,Agent: Agent,PointPosition:list):
+def A_star(Root: Node,Agent: Agent,PointPosition:list):
     mht=MHT()
     mht.push(Root)
     while True:
@@ -17,4 +17,5 @@ def UCS(Root: Node,Agent: Agent,PointPosition:list):
             return state
         childs=Agent.successor(state)
         for child in childs:
+            child.h = Agent.H(child)
             mht.push(child)

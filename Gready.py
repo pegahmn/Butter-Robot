@@ -7,7 +7,7 @@ from GetBPR import GetBPRPosition
 from queue01 import Queue
 from stack01 import Stack
 
-def DFS(Root: Node,Agent: Agent,PointPosition:list):
+def Gready(Root: Node,Agent: Agent,PointPosition:list):
     stack=Stack()
     stack.push(Root)
     while True:
@@ -18,4 +18,14 @@ def DFS(Root: Node,Agent: Agent,PointPosition:list):
             return state
         childs=Agent.successor(state)
         for child in childs:
-            stack.push(child)
+            child.h=Agent.H(child)
+        while childs != []:
+            maxH = childs[0].h
+            index = 0
+
+            for i in range(1, len(childs)):
+                if childs[i].h > maxH:
+                    index = i
+                    maxH = childs[i].h
+
+            stack.push(childs.pop(index))
