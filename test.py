@@ -6,6 +6,7 @@ from GetBPR import GetBPRPosition
 from DFS import DFS
 from BFS import BFS
 from UCS import UCS
+from IDS import IDS
 from A_star import A_star
 from Gready import Gready
 
@@ -16,7 +17,7 @@ state = np.asarray(
     ['1', '1', '2', '1', '1']], dtype= np.str_
 )
 
-Algorithms = [DFS, BFS, UCS, A_star, Gready]
+Algorithms = [DFS, BFS, UCS, IDS, A_star, Gready]
 
 ButterPosition, RobotPosition, PointPosition=GetBPRPosition(state)
 env = Environment(state, PointPosition)
@@ -26,7 +27,7 @@ root = Node(RobotPosition[0], ButterPosition)
 for algoritm in Algorithms:
     agent.seen = []
     Answer=algoritm(root, agent, PointPosition)
-    print("--------------" + algoritm.__name__ + "--------------")
+    print("-------------- " + algoritm.__name__ + " --------------")
 
     if Answer==None:
         print("There is no answer")
