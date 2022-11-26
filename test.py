@@ -10,12 +10,21 @@ from IDS import IDS
 from A_star import A_star
 from Gready import Gready
 
-state = np.asarray(
-    [['x', 'x', 'x', 'x', 'x'],
-    ['x', '1', '2b', '1p', 'x'],
-    ['1', '1p', '2b', '1r', '1'],
-    ['1', '1', '2', '1', '1']], dtype= np.str_
-)
+# state = np.asarray(
+#     [['x', 'x', 'x', 'x', 'x'],
+#     ['x', '1', '2b', '1p', 'x'],
+#     ['1', '1p', '2b', '1r', '1'],
+#     ['1', '1', '2', '1', '1']], dtype= np.str_
+# )
+
+state = []
+
+n, m = (int(x) for x in input().split())
+
+for i in range(n):
+    state.append(input().split())
+
+state = np.asarray(state)
 
 Algorithms = [DFS, BFS, UCS, IDS, A_star, Gready]
 
@@ -25,12 +34,12 @@ agent = Agent(env)
 root = Node(RobotPosition[0], ButterPosition)
 
 for algoritm in Algorithms:
-    agent.seen = []
+    agent.resetSeen()
     Answer=algoritm(root, agent, PointPosition)
     print("-------------- " + algoritm.__name__ + " --------------")
 
     if Answer==None:
-        print("There is no answer")
+        print("can't pass the butter")
     else:
         node = Answer
         Moves = []
@@ -38,19 +47,9 @@ for algoritm in Algorithms:
             Moves.append(node.move)
             node = node.parent
 
-        print("Moves: ")
         for i in range(len(Moves)-1,-1,-1):
-            print(f"{Moves[i]} ", end='')
+            print(Moves[i], end=' ')
 
-        print(f"depth = {Answer.depth}")
-        print(f"cost = {Answer.g}")
-        for i in range(state.shape[0]):
-            print(end= "\t")
-            for j in range(state.shape[1]):
-                cell = state[i, j]
-                cell += 'p' if [i, j] in PointPosition else ''
-                cell += 'b' if [i, j] in Answer.posBs else ''
-                cell += 'r' if [i, j] == Answer.posR else ''
-                print(cell, end= "\t")
-            print()
-        print("---------------------------------------------")
+        print()
+        print(Answer.g)
+        print(Answer.depth)
