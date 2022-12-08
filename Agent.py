@@ -4,7 +4,7 @@ from Environment import Environment
 
 class Agent:
     env: Environment
-    seen = []
+    seen = set()
     MOVES = {
         'R' : (0, 1),
         'U' : (-1, 0),
@@ -45,7 +45,7 @@ class Agent:
             if not self.isInTable(frontPos):
                 return False
 
-            if  table[newPos[0], newPos[1]] == 'x':
+            if  table[frontPos[0], frontPos[1]] == 'x':
                 return False
             
             if frontPos in node.posBs:
@@ -109,12 +109,18 @@ class Agent:
 
     def successor(self, node: Node) -> list[Node]:
         Childs = []
-
+        if node in self.seen:
+            return Childs
         for move in Agent.MOVES.keys():
             if self.isValidMove(node, move):
                 childe = self.getChilde(node, move)
-                if childe not in self.seen:
-                    Childs.append(childe)
+            
+                Childs.append(childe)
         
-        self.seen.append(node)
+        self.seen.add(node)
         return Childs
+Node0=Node([1,8],[[1,4]],None)
+Node1=Node([1,1],[[1,1]],Node0,"L")
+Node2=Node([1,1],[[1,1]],Node1,"R")
+S={Node1}
+print(Node2 in S)
