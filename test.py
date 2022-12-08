@@ -11,12 +11,12 @@ from A_star import A_star
 from Gready import Gready
 
 state = np.asarray(
-    [['1r', '1', '1', '1', 'x', 'x','1', '1', '1', '1'],
-    ['1', 'x', '1', '1', '2', '2','1', '1', '1', '1'],
-    ['x', '1', '1', '2b', '2','2','2b','1','x','x'],
-    ['x', '1', '1', 'x', 'x','2','2','1','1p','x'],
-    ['1','1','1','1','2','2','1','1','1','1'],
-    ['1','1','1','1','x','1p','x','x','1','1']], dtype= np.str_
+    [['1r','1', '1', '1',  'x', 'x', '1', '1', '1', '1'],
+    [ '1', 'x', '1', '1',  '2', '2', '1', '1', '1', '1'],
+    [ 'x', '1', '1', '2b', '2', '2', '2b','1', 'x', 'x'],
+    [ 'x', '1', '1', 'x',  'x', '2', '2', '1', '1p','x'],
+    [ '1', '1', '1', '1',  '2', '2', '1', '1', '1', '1'],
+    [ '1', '1', '1', '1',  'x', '1p','x', 'x', '1', '1']], dtype= np.str_
 )
 
 # state = []
@@ -28,7 +28,7 @@ state = np.asarray(
 
 # state = np.asarray(state)
 
-Algorithms = [DFS, BFS, UCS, IDS, A_star, Gready]
+Algorithms = [IDS]
 
 ButterPosition, RobotPosition, PointPosition=GetBPRPosition(state)
 env = Environment(state, PointPosition)

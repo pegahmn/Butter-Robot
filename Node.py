@@ -30,4 +30,3 @@ class Node:
 
     def __lt__(self, __o):
         return __o.__gt__(self)
-

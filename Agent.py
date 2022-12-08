@@ -6,10 +6,10 @@ class Agent:
     env: Environment
     seen = set()
     MOVES = {
+        'L' : (0, -1),
+        'D' : (1, 0),
         'R' : (0, 1),
         'U' : (-1, 0),
-        'L' : (0, -1),
-        'D' : (1, 0)
     }
 
     def __init__(self, env: Environment) -> None:
@@ -106,16 +106,30 @@ class Agent:
         
         return H
 
-
-    def successor(self, node: Node) -> list[Node]:
+    def successor(self, node: Node, checkerType: int = 2) -> list[Node]:
         Childs = []
-        if node in self.seen:
-            return Childs
+
+        if checkerType == 2:
+            if node in self.seen:
+                return []
+            self.seen.add(node)
+        
+
+        if checkerType == 1:
+            keeperNode = node.parent
+            while keeperNode != None:
+                if keeperNode == node:
+                    return []
+                keeperNode = keeperNode.parent
+
         for move in Agent.MOVES.keys():
             if self.isValidMove(node, move):
                 childe = self.getChilde(node, move)
             
                 Childs.append(childe)
-        
-        self.seen.add(node)
+
         return Childs
+
+class CheckerType:
+    PATH_CHECK = 1
+    CYCLE_CHECK = 2
