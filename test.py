@@ -10,21 +10,23 @@ from IDS import IDS
 from A_star import A_star
 from Gready import Gready
 
-# state = np.asarray(
-#     [['x', 'x', 'x', 'x', 'x'],
-#     ['x', '1', '2b', '1p', 'x'],
-#     ['1', '1p', '2b', '1r', '1'],
-#     ['1', '1', '2', '1', '1']], dtype= np.str_
-# )
+state = np.asarray(
+    [['1r', '1', '1', '1', 'x', 'x','1', '1', '1', '1'],
+    ['1', 'x', '1', '1', '2', '2','1', '1', '1', '1'],
+    ['x', '1', '1', '2b', '2','2','2b','1','x','x'],
+    ['x', '1', '1', 'x', 'x','2','2','1','1p','x'],
+    ['1','1','1','1','2','2','1','1','1','1'],
+    ['1','1','1','1','x','1p','x','x','1','1']], dtype= np.str_
+)
 
-state = []
+# state = []
 
-n, m = (int(x) for x in input().split())
+# n, m = (int(x) for x in input().split())
 
-for i in range(n):
-    state.append(input().split())
+# for i in range(n):
+#     state.append(input().split())
 
-state = np.asarray(state)
+# state = np.asarray(state)
 
 Algorithms = [DFS, BFS, UCS, IDS, A_star, Gready]
 
