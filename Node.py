@@ -16,14 +16,14 @@ class Node:
         self.g = g
         self.h = h
 
-    def __eq__(self, __o: object) -> bool:
-        return type(__o) == Node and Compare(self.posBs,__o.posBs) and self.posR == __o.posR
-
     def __hash__(self) -> int:
         h = hash((self.posR[0], self.posR[1]))
         for pos in self.posBs:
             h = hash((h, pos[0], pos[1]))
         return h
+
+    def __eq__(self, __o: object) -> bool:
+        return type(__o) == Node and Compare(self.posBs,__o.posBs) and self.posR == __o.posR
 
     def __gt__(self, __o):
         return (self.g + self.h) > (__o.g + __o.h)

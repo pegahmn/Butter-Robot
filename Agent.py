@@ -119,8 +119,3 @@ class Agent:
         
         self.seen.add(node)
         return Childs
-Node0=Node([1,8],[[1,4]],None)
-Node1=Node([1,3],[[2,1]],Node0,"L")
-Node2=Node([1,3],[[2,1]],Node1,"R")
-S={Node1}
-print(Node2 in S)

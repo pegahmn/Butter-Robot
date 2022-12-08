@@ -7,7 +7,7 @@ from GetBPR import GetBPRPosition
 from queue01 import Queue
 from stack01 import Stack
 
-def BFS(Root: Node,Agent: Agent,PointPosition:list):
+def BFS(Root: Node,Agent: Agent,PointPosition:list):#O(K^2,C(K+1,m*n))
     queue=Queue()
     queue.enqueue(Root)
     while True:

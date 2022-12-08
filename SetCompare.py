@@ -1,5 +1,5 @@
 import numpy as np
-
+#O(K^2)
 def Compare(ButterPosition:list,PointPosition:list):
     for Butter in ButterPosition:
         if Butter not in PointPosition:

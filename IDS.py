@@ -7,10 +7,9 @@ from GetBPR import GetBPRPosition
 from stack01 import Stack
 
 def IDS(Root: Node,Agent: Agent,PointPosition:list):
-    stack=Stack()
     limit=0
-    
-    while True:
+    while True: #()
+        stack=Stack()
         stack.push(Root)
         Agent.resetSeen()
         max_depth=0
@@ -18,7 +17,6 @@ def IDS(Root: Node,Agent: Agent,PointPosition:list):
             if stack.is_empty():
                 break
             node=stack.pop()
-            node:Node
             if Compare(node.posBs,PointPosition):
                 return node
             if node.depth<limit:
@@ -30,5 +28,5 @@ def IDS(Root: Node,Agent: Agent,PointPosition:list):
             
         if limit>max_depth:
             return None
-        
+            
         limit+=1
