@@ -1,14 +1,7 @@
-import numpy as np
-from Node import Node
-from Environment import Environment
-from Agent import Agent
-from GetBPR import GetBPRPosition
-from DFS import DFS
-from BFS import BFS
-from UCS import UCS
-from IDS import IDS
-from A_star import A_star
-from Gready import Gready
+from data_structures import *
+from agent import *
+from algorithms import *
+from state import *
 
 state = np.asarray(
     [['1r','1', '1', '1',  'x', 'x', '1', '1', '1', '1'],
@@ -16,7 +9,7 @@ state = np.asarray(
     [ 'x', '1', '1', '2b', '2', '2', '2b','1', 'x', 'x'],
     [ 'x', '1', '1', 'x',  'x', '2', '2', '1', '1p','x'],
     [ '1', '1', '1', '1',  '2', '2', '1', '1', '1', '1'],
-    [ '1', '1', '1', '1',  'x', '1p','x', 'x', '1', '1']], dtype= np.str_
+    [ '1', '1', '1', '1',  'x', '1p','x', '1', '1', '1']], dtype= np.str_
 )
 
 # state = []
@@ -28,18 +21,18 @@ state = np.asarray(
 
 # state = np.asarray(state)
 
-Algorithms = [IDS]
+algorithms = [DFS, BFS, UCS, IDS, A_star, Gready]
 
-ButterPosition, RobotPosition, PointPosition=GetBPRPosition(state)
-env = Environment(state, PointPosition)
+butterPositions, robotPositions, pointPositions=getBPRPositions(state)
+env = Environment(state, pointPositions)
 agent = Agent(env)
-root = Node(RobotPosition[0], ButterPosition)
+root = Node(robotPositions[0], butterPositions)
 
-for algoritm in Algorithms:
+for algorithm in algorithms:
     agent.resetSeen()
-    Answer=algoritm(root, agent, PointPosition)
-    print("-------------- " + algoritm.__name__ + " --------------")
+    Answer=algorithm(root, agent, pointPositions)
 
+    print("-------------- " + algorithm.__name__ + " --------------")
     if Answer==None:
         print("can't pass the butter")
     else:
@@ -49,7 +42,7 @@ for algoritm in Algorithms:
             Moves.append(node.move)
             node = node.parent
 
-        for i in range(len(Moves)-1,-1,-1):
+        for i in range(len(Moves)-2,-1,-1):
             print(Moves[i], end=' ')
 
         print()
